@@ -33,6 +33,9 @@ bundled. Provisioning/downloads and resource admission are deliberately separate
 After review and explicit GPU authorization, the matching converter CLI is:
 
 ```sh
+(
+set -eu
+: "${ENGINE:?}" "${PYTHON:?}" "${SOURCE:?}" "${CALIBRATION:?}" "${WORK:?}" "${OUTPUT:?}" "${A6000_UUID:?}"
 test "$(git -C "$ENGINE" rev-parse HEAD)" = a7b05152924da3b2a88d9c2cff0a4e2d6703157b
 # Inspect git status too: HEAD alone does not establish an unchanged tree.
 test -f "$CALIBRATION"
@@ -47,6 +50,7 @@ TOKENIZERS_PARALLELISM=false \
 "$PYTHON" -B convert.py -i "$SOURCE" -w "$WORK" -o "$OUTPUT" \
   -b 8 -hb 8 -mb 8 -hq -cd "$CALIBRATION" -cr 250 -cc 2048 \
   -ss 8192 -d 0 -dr 1 -cb mul1 --out_scales always -cpi 120
+)
 ```
 
 The historical calibration had 250 rows of 2048 real valid tokens each. It is not

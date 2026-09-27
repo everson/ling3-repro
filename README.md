@@ -30,14 +30,20 @@ Tests generate small synthetic tensors in temporary directories; they need no we
 
 ## Reference capture and scoring
 
-Supply your own licensed, screened exact token sequences in a JSON object with `sequences`, each containing `sequence_id`, `input_ids` and zero-based `score_start`. Inputs must use the pinned model's tokenizer. Next-token targets are derived from the sequence; the final input position has no target. No real token corpus is bundled. Inspect the CLI before choosing memory/context limits: full original evaluation is resource-intensive even though weights stream.
+Supply your own licensed, screened exact token sequences in a JSON object with `"purpose": "held-out"` and `sequences`, each containing `sequence_id`, `input_ids` and zero-based `score_start`. Minimal synthetic schema example (arbitrary fixture IDs, not an evaluation corpus):
+
+```json
+{"purpose":"held-out","sequences":[{"sequence_id":"synthetic-example","input_ids":[1,2,3],"score_start":0}]}
+```
+
+Inputs must use the pinned model's tokenizer. Next-token targets are derived from the sequence; the final input position has no target. No real token corpus is bundled. Inspect the CLI before choosing memory/context limits: full original evaluation is resource-intensive even though weights stream.
 
 ```sh
 python -m ling3_repro.streaming --model "$MODEL" --tokens "$TOKENS" --output "$REFERENCE"
 python -m ling3_repro.diagnostic --reference "$REFERENCE" --candidate "$CANDIDATE" --output "$SCORES"
 ```
 
-The reference defaults to CPU/BF16. GPU requires an explicit device plus `--allow-gpu`; that flag is not resource admission. Output locations must be new. `capture_candidate` in `ling3_repro.diagnostic` accepts an already-loaded model/cache and writes the candidate schema; CPU tests exercise its transport contract, not native loading. It assumes a 2,048-token cache contract. Do not use it as an unqualified long-context runner.
+The reference defaults to CPU/BF16. GPU requires an explicit device plus `--allow-gpu`; that flag is not resource admission. Output locations must be new. `capture_candidate` in `ling3_repro.diagnostic` accepts an already-loaded model/cache and writes the candidate schema; CPU tests exercise its transport contract, not native loading. It requires exclusive ownership of an initialized cache attached before model loading, with capacity of at least 2,048 tokens. Its rectangular addressing starts at page zero: never share this cache with an active generator or other caller. These caller preconditions are not automatically validated. Do not use it as an unqualified long-context runner.
 
 Compare independent fresh captures and run `--wrong-rows` for a within-sequence row-roll sensitivity control. That control differs from historical row-reversal controls; their numbers are not interchangeable. The scorer materializes bounded captures in CPU memory. Capture hashes and declared engine/model identities are consistency metadata, not independent authentication of model payloads or runtime identity.
 

@@ -202,7 +202,7 @@ class StreamingTests(unittest.TestCase):
     def setUpClass(cls):
         if torch.cuda.is_initialized():
             raise RuntimeError("CPU fixture tests must not initialize CUDA")
-        cls.temp = tempfile.TemporaryDirectory(prefix="ling-reference-", dir=os.environ["TMPDIR"])
+        cls.temp = tempfile.TemporaryDirectory(prefix="ling-reference-", dir=os.environ.get("TMPDIR"))
         cls.base = Path(cls.temp.name)
         cls.config, cls.weights = make_fixture(cls.base / "fp32")
         make_fixture(cls.base / "bf16", torch.bfloat16)
