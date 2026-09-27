@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ling3-repro"
+version = "0.1.0"
+description = "Offline Ling target-reference and cross-engine diagnostic recipes"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.5", "safetensors>=0.4"]
+
+[project.scripts]
+ling3-reference = "ling3_repro.streaming:main"
+ling3-score = "ling3_repro.diagnostic:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

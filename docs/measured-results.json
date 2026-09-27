@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "evidence": "Historical receipt aggregates; not reexecuted during packaging; private receipts not bundled.",
+  "source_model": "inclusionAI/Ling-3.0-flash",
+  "source_revision": "ef06d91fe382109ae82647da88ff99b0f11745b0",
+  "quality_qualified": false,
+  "conversion": {
+    "evidence_label": "completed-original-8bit-worker-and-artifact-reports",
+    "status": "CONVERTED_INTEGRITY_VERIFIED_NOT_QUALITY_QUALIFIED",
+    "bits": {
+      "bits": 8,
+      "head_bits": 8,
+      "mtp_bits": 8
+    },
+    "mtp_calibration": "none",
+    "expected_linear_count": 63201,
+    "linear_role_counts": {
+      "bits": 61657,
+      "head_bits": 1,
+      "mtp_bits": 1543
+    },
+    "output_shard_count": 21,
+    "physical_tensor_count": 253246,
+    "native_tensor_count": 442,
+    "payload_bytes": 129139864068,
+    "output_size_bytes": 129281491153,
+    "conversion_cgroup_peak_bytes": 59780124672
+  },
+  "offload_load": {
+    "evidence_label": "completed-8bit-offload-load-report",
+    "cpu_experts_per_layer": 352,
+    "mtp": false,
+    "cache_tokens": 2048,
+    "loaded_modules": 45,
+    "total_modules": 45,
+    "load_seconds": 251.54759113499313,
+    "gpu_allocated": 42837712896,
+    "gpu_experts_per_layer": 160,
+    "scope": "Load and bounded raw smoke only; not throughput qualification."
+  },
+  "diagnostic": {
+    "evidence_label": "completed-8bit-candidate-diagnostic-comparison",
+    "status": "DIAGNOSTIC_ONLY_NO_QUALITY_VERDICT",
+    "all_columns_retained": 157184,
+    "candidate_fresh_replay_exact": true,
+    "reference_compute_dtype": "bfloat16",
+    "limitations": [
+      "384 scored positions from two old diagnostics, NOT representative quality.",
+      "FP16/mixed versus BF16 includes backend/cache/rounding and weight differences.",
+      "Original R2 historical process identity limits remain; no backfill.",
+      "No invented quality threshold. Failed replay/sensitivity requires investigation."
+    ],
+    "scored_rows": 384,
+    "mean_kl_reference_candidate": 0.003903413947309635,
+    "top1_agreement": 0.9869791666666666,
+    "candidate_replay_mean_kl": 0.0,
+    "candidate_wrong_rows_mean_kl": 14.174482170961658,
+    "reference_candidate_wrong_rows_mean_kl": 14.175730776142395
+  }
+}
