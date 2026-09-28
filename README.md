@@ -1,6 +1,6 @@
 # Ling-3.0-Flash experiment companion
 
-Source-only companion to [the experimental ExLlamaV3 implementation](https://github.com/everson/exllamav3/tree/a7b05152924da3b2a88d9c2cff0a4e2d6703157b). One current implementation per tool; no archived scripts or model artifacts.
+Source-only companion to [the experimental ExLlamaV3 PR](https://github.com/turboderp-org/exllamav3/pull/419). One current implementation per tool; no archived scripts or model artifacts.
 
 ## Included
 
